@@ -1805,7 +1805,7 @@ void LoopClosing::MergeLocal2()
     {
         unique_lock<mutex> lock(mMutexGBA);
         mbStopGBA = true;
-
+ 
         mnFullBAIdx++;
 
         if(mpThreadGBA)

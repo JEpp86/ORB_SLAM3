@@ -1538,8 +1538,11 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, co
     }
 
     if((fabs(mDepthMapFactor-1.0f)>1e-5) || imDepth.type()!=CV_32F)
+        std::cout << "Converting Depth map by scale: " << std::to_string(mDepthMapFactor) << std::endl;
         imDepth.convertTo(imDepth,CV_32F,mDepthMapFactor);
-
+        double minVal, maxVal;
+        cv::minMaxIdx(imDepth, &minVal, &maxVal);
+        std::cout << "Maximum Distance: " << std::to_string(maxVal) << std::endl;
     if (mSensor == System::RGBD)
         mCurrentFrame = Frame(mImGray,imDepth,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,mpCamera);
     else if(mSensor == System::IMU_RGBD)
